@@ -10,9 +10,11 @@ File.open('config.sh', 'r').each_line do |line|
 end
 
 Vagrant.configure(2) do |config|
+  config.ssh.insert_key = false
   config.vm.box = "puppetlabs/centos-6.6-64-puppet"
   config.vm.box_check_update = false
-  config.vm.network "public_network", bridge: 'wlan2', ip: ENV['V_IP_ADDRESS']
+  #config.vm.network "public_network", bridge: 'wlan2', ip: ENV['V_IP_ADDRESS']
+  config.vm.network "private_network", ip: ENV['V_IP_ADDRESS']
   config.vm.synced_folder ENV['V_KITS_DIRECTORY'], "/kits"
   config.vm.network :forwarded_port, guest: ENV['V_PORT'], host: ENV['V_PORT']
   config.vm.network :forwarded_port, guest: 22, host: ENV['V_VAGRANT_SSHPORT'], id: "ssh"
