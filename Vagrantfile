@@ -11,7 +11,7 @@ end
 
 Vagrant.configure(2) do |config|
   config.ssh.insert_key = false
-  config.vm.box = "boxcutter/ol67"
+  config.vm.box = "boxcutter/ol72-desktop" # use this for a full OracleLinux 7.2 desktop GUI
   config.vm.box_check_update = false
   #config.vm.network "public_network", bridge: 'wlan2', ip: ENV['V_IP_ADDRESS']
   config.vm.network "private_network", ip: ENV['V_IP_ADDRESS']
@@ -22,5 +22,10 @@ Vagrant.configure(2) do |config|
     vb.memory = ENV['V_VAGRANT_MEMORY']
     vb.gui = ENV['V_VAGRANT_GUI']
   end
-  config.vm.provision "shell", inline: "/vagrant/scripts/install.sh"
+
+  config.vm.provision "shell", inline: <<-SHELL
+    yum -y install git emacs-nox firefox
+    /vagrant/scripts/install.sh
+  SHELL
+
 end
