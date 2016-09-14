@@ -11,10 +11,9 @@ end
 
 Vagrant.configure(2) do |config|
   config.ssh.insert_key = false
-  config.vm.box = "boxcutter/ol67"
+  config.vm.box = "boxcutter/ol68"
 
   config.vm.box_check_update = false
-  #config.vm.network "public_network", bridge: 'wlan2', ip: ENV['V_IP_ADDRESS']
   config.vm.network "private_network", ip: ENV['V_IP_ADDRESS']
   config.vm.synced_folder ENV['V_KITS_DIRECTORY'], "/kits"
   config.vm.network :forwarded_port, guest: ENV['V_PORT'], host: ENV['V_PORT']
